@@ -340,15 +340,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   keyInput.addEventListener("keypress", e => e.key === "Enter" && handleLogin());
 
   // ==================== BACK BUTTON ====================
-  document.querySelectorAll(".back-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (confirm("Thoát sẽ phải nhập lại key nha!")) {
-        localStorage.removeItem("HEADLOCK_KEY");
-        isLoggedIn = false;
-        showPage("splashScreen");
-      }
-    });
+document.querySelectorAll(".back-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    // KHÔNG xoá key nữa
+    isLoggedIn = false;
+
+    showPage("splashScreen");
+
+    showToggleToast("Đã thoát giao diện!");
   });
+});
 
     // ==================== CÁC TOGGLE KHÁC (REG FILES, BOOT RAM, FIX RUNG) ====================
   document.querySelectorAll('.toggle-switch:not([data-toggle="headlock"])').forEach(toggle => {
