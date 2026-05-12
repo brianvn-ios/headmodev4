@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HeadMode</title>
+    <title>Cyperlock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -23,7 +23,7 @@
     <div class="page login-screen" id="loginScreen">
         <div class="login-header">
             <button class="back-btn" id="loginBackBtn">← Back</button>
-            <h1>HeadMode</h1>
+            <h1>Cyperlock</h1>
             <div class="login-logo">
                 <div class="login-logo-placeholder">
                    <img id="loginLogo" src="images/logo.png" alt="">
@@ -43,7 +43,7 @@
                 <div class="social-btn zalo"><img src="images/zalo.png" alt=""></div>
                 <div class="social-btn facebook"><img style="width:80px !important;" src="images/fb.webp" alt=""></div>
             </div>
-            <p class="footer-text">By Tuấn Anh</p>
+            <p class="footer-text">by Huy Minh</p>
         </div>
     </div>
 
@@ -52,8 +52,8 @@
         <div class="header">
             <button class="back-btn" id="mainBackBtn">← Back</button>
             <div class="header-title">
-                <h1>HeadLock</h1>
-                <p class="header-subtitle">By Tuấn Anh</p>
+                <h1>Cyperlock</h1>
+                <p class="header-subtitle">BY Huy Minh</p>
             </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -128,29 +128,29 @@
         <div class="info-content">
             <div class="info-item">
                 <div>
-                    <div class="info-item-text">Panel made By Tuấn Anh</div>
-                    <div class="info-item-subtext">0969618762</div>
+                    <div class="info-item-text">Panel made by Huy Minh</div>
+                    <div class="info-item-subtext">0378881167</div>
                 </div>
                 <span class="info-icon"><i class="fa-solid fa-phone"></i></span>
             </div>
             <div class="info-item">
                 <div>
                     <div class="info-item-text">FaceBook</div>
-                    <div class="info-item-subtext">Tuấn Ankkk</div>
+                    <div class="info-item-subtext">Huy Minh</div>
                 </div>
                 <span class="info-icon"><i class="fa-brands fa-facebook"></i></span>
             </div>
             <div class="info-item">
                 <div>
                     <div class="info-item-text">TikTok</div>
-                    <div class="info-item-subtext">@tanh.iloveyou</div>
+                    <div class="info-item-subtext">@huyminh.loveyoutiktok</div>
                 </div>
                 <span class="info-icon"><i class="fa-brands fa-tiktok"></i></span>
             </div>
             <button class="update-btn">UPDATE TO NEW+</button>
             <div class="copyright">
                 <strong>Copyright belongs to</strong>
-                <strong>Tuấn Anh Dev</strong>
+                <strong>Huy Minh Dev</strong>
                 <div style="margin-top: 10px;">Thank For Using</div>
             </div>
         </div>
@@ -172,7 +172,7 @@
     <div class="toggle-toast" id="toggleToast"></div>
     <script>
 // ==================== CẤU HÌNH SERVER ====================
-const SERVER_URL = "https://api-server-key.tranphat1357t.workers.dev/";
+const SERVER_URL = "https://royal-dust-4a79.tranphat1357t.workers.dev";
 
 // ==================== BIẾN TOÀN CỤC ====================
 let isLoggedIn = false;
@@ -440,14 +440,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Social buttons
   document.querySelector(".social-btn.zalo").addEventListener("click", () => alert("Zalo 0378881167"));
   document.querySelector(".social-btn.facebook").addEventListener("click", () => 
-    window.open("https://www.facebook.com/share/1Db82xRiSa/?mibextid=wwXIfr", "_blank")
+    window.open("https://www.facebook.com/nguoiyeuculaconcho?mibextid=wwXIfr&rdid=VxTpqhrSW1nwVvFk&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J9kVHWibU%2F%3Fmibextid%3DwwXIfr", "_blank")
   );
 
   document.querySelectorAll(".info-item").forEach(item => {
     const text = item.querySelector(".info-item-text").textContent;
-    if (text === "FaceBook") item.addEventListener("click", () => window.open("https://www.facebook.com/share/1Db82xRiSa/?mibextid=wwXIfr", "_blank"));
-    if (text === "TikTok") item.addEventListener("click", () => window.open("https://www.tiktok.com/@tanh.iloveyou", "_blank"));
-    if (text === "Panel made by Minh IOS") item.addEventListener("click", () => window.open("http://zalo.me/0969618762", "_blank"));
+    if (text === "FaceBook") item.addEventListener("click", () => window.open("https://www.facebook.com/nguoiyeuculaconcho?mibextid=wwXIfr&rdid=VxTpqhrSW1nwVvFk&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J9kVHWibU%2F%3Fmibextid%3DwwXIfr", "_blank"));
+    if (text === "TikTok") item.addEventListener("click", () => window.open("https://www.tiktok.com/@huyminh.loveyoutiktok?_r=1&_t=ZS-96BumzmRTfN", "_blank"));
+    if (text === "Panel made by Minh IOS") item.addEventListener("click", () => window.open("http://zalo.me/84378881167", "_blank"));
   });
 
   document.querySelector(".update-btn").addEventListener("click", () => {
