@@ -52,7 +52,7 @@
         <div class="header">
             <button class="back-btn" id="mainBackBtn">← Back</button>
             <div class="header-title">
-                <h1>HeadLock</h1>
+                <h1>HeadMode</h1>
                 <p class="header-subtitle">By Tuấn Anh</p>
             </div>
             <div class="hamburger" id="hamburger">
@@ -71,7 +71,7 @@
                 <div class="toggle-item">
                     <div class="toggle-label">
                         <span class="toggle-icon">🎯</span>
-                        <span>REG FILES</span>
+                        <span>AIMMODE</span>
                     </div>
                     <div class="toggle-switch" data-toggle="reg">
                         <div class="toggle-slider"></div>
@@ -81,7 +81,7 @@
                 <div class="toggle-item">
                     <div class="toggle-label">
                         <span class="toggle-icon">🚀</span>
-                        <span>BOOT RAM</span>
+                        <span>BUFF FPS</span>
                     </div>
                     <div class="toggle-switch" data-toggle="boot">
                         <div class="toggle-slider"></div>
@@ -91,7 +91,7 @@
                 <div class="toggle-item">
                     <div class="toggle-label">
                         <span class="toggle-icon">💀</span>
-                        <span>HEADLOCK</span>
+                        <span>HEADMODE</span>
                     </div>
                     <div class="toggle-switch" data-toggle="headlock">
                         <div class="toggle-slider"></div>
@@ -101,7 +101,7 @@
                 <div class="toggle-item">
                     <div class="toggle-label">
                         <span class="toggle-icon">⚙️</span>
-                        <span>FIX RUNG</span>
+                        <span>240HZ</span>
                     </div>
                     <div class="toggle-switch" data-toggle="fix">
                         <div class="toggle-slider"></div>
@@ -270,10 +270,10 @@ function showPage(pageId) {
 // Hàm lấy tên chức năng từ data-toggle
 function getToggleName(toggleType) {
   const names = {
-    "reg": "REG FILES",
-    "boot": "BOOT RAM", 
-    "headlock": "HEADLOCK",
-    "fix": "FIX RUNG"
+    "reg": "AIMMODE",
+    "boot": "BUFF FPS", 
+    "headlock": "HEADMODE",
+    "fix": "240HZ"
   };
   return names[toggleType] || toggleType;
 }
