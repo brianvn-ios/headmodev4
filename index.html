@@ -502,26 +502,40 @@ document.querySelectorAll(".back-btn").forEach(btn => {
   });
 
   // ==================== NÚT ON / OFF DƯỚI RIÊNG BIỆT (chỉ điều khiển nút + modal, không ảnh hưởng toggle trên) ====================
-  document.getElementById("onBtn")?.addEventListener("click", async () => {
-    if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
+document.getElementById("onBtn")?.addEventListener("click", async () => {
 
-    const check = await activateKey(currentKey);
-    if (!check.ok) {
-     showToggleToast("Key hết hạn!");
-     localStorage.removeItem("HEADLOCK_KEY");
-     isLoggedIn = false;
-     showPage("loginScreen");
-     return;
+  if (!isLoggedIn) {
+    return showToggleToast("Chưa nhập key!");
   }
-    }
 
-    // Chỉ bật nút + modal, KHÔNG đụng vào toggle trên
-    document.getElementById("onBtn").classList.add("active");
-    document.getElementById("offBtn").classList.remove("active");
-    document.getElementById("successModal").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
-    showToggleToast("Đã bật HEADLOCK");
-  });
+  const check = await activateKey(currentKey);
+
+  if (!check.ok) {
+
+    showToggleToast("Key hết hạn!");
+
+    localStorage.removeItem("HEADLOCK_KEY");
+
+    isLoggedIn = false;
+
+    showPage("loginScreen");
+
+    return;
+
+  }
+
+  // Bật modal
+  document.getElementById("onBtn").classList.add("active");
+
+  document.getElementById("offBtn").classList.remove("active");
+
+  document.getElementById("successModal").classList.add("active");
+
+  document.getElementById("overlay").classList.add("active");
+
+  showToggleToast("Đã bật HEADLOCK");
+
+});
 
   document.getElementById("offBtn")?.addEventListener("click", () => {
     document.getElementById("onBtn").classList.remove("active");
