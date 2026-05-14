@@ -197,7 +197,12 @@ async function activateKey(key) {
 
     console.log(data);
 
-    if (data.success === true) {
+    // CHECK THÀNH CÔNG
+    if (
+      data.success === true &&
+      data.data &&
+      data.data.status === "active"
+    ) {
 
       return {
         success: true,
@@ -207,16 +212,15 @@ async function activateKey(key) {
         }
       };
 
-    } else {
-
-      return {
-        success: false,
-        data: {
-          message: data.message || "Key không hợp lệ"
-        }
-      };
-
     }
+
+    // KEY DIE / HẾT HẠN
+    return {
+      success: false,
+      data: {
+        message: "Key không hợp lệ hoặc hết hạn!"
+      }
+    };
 
   } catch (err) {
 
