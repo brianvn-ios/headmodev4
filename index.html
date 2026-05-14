@@ -281,29 +281,44 @@ function getToggleName(toggleType) {
 
 // ==================== DOM READY ====================
 document.addEventListener("DOMContentLoaded", async () => {
-const offlineExpire = localStorage.getItem("HEADLOCK_OFFLINE_EXPIRE");
+// ==================== OFFLINE KEY ====================
 
-if (
-  savedKey === "APP-HAMON-ANHDAI-DIKHANH","APP-KAHD-2NAJ" &&
-  offlineExpire &&
-  Date.now() < parseInt(offlineExpire)
-) {
-  isLoggedIn = true;
-  currentKey = savedKey;
-  showPage("mainScreen");
-  showToggleToast("Offline key còn hạn!");
-  return;
-}
+  const OFFLINE_KEYS = [
+    "APP-HAMON-ANHDAI-DIKHANH",
+    "APP-KAHD-2NAJ"
+  ];
+
+  // Kiểm tra key đã lưu
+  const savedKey = localStorage.getItem("HEADLOCK_KEY");
+  const offlineExpire = localStorage.getItem("HEADLOCK_OFFLINE_EXPIRE");
+
+  if (
+    savedKey &&
+    OFFLINE_KEYS.includes(savedKey) &&
+    offlineExpire &&
+    Date.now() < parseInt(offlineExpire)
+  ) {
+    isLoggedIn = true;
+    currentKey = savedKey;
+
+    showPage("mainScreen");
+    showToggleToast("Offline key còn hạn!");
+    return;
+  }
 
   // Kiểm tra key đã lưu → tự động login
-  const savedKey = localStorage.getItem("HEADLOCK_KEY");
   if (savedKey) {
     const check = await activateKey(savedKey);
+
     if (check.success) {
       isLoggedIn = true;
       currentKey = savedKey;
+
       showPage("mainScreen");
-      showToggleToast(`Chào mừng quay lại!! ${getDaysLeft(check.data.expiresAt)}`);
+
+      showToggleToast(
+        `Chào mừng quay lại!! ${getDaysLeft(check.data.expiresAt)}`
+      );
     } else {
       localStorage.removeItem("HEADLOCK_KEY");
       showPage("splashScreen");
@@ -322,8 +337,9 @@ if (
   const keyInput = document.getElementById("keyInput");
   const loginBtn = document.getElementById("loginBtn");
 
- const OFFLINE_KEY = "APP-HAMON-ANHDAI-DIKHANH","APP-KAHD-2NAJ";
-const OFFLINE_EXPIRE = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+const OFFLINE_EXPIRE = new Date(
+  Date.now() + 3 * 24 * 60 * 60 * 1000
+);
 
 const handleLogin = async () => {
   const key = keyInput.value.trim();
@@ -334,17 +350,28 @@ const handleLogin = async () => {
   }
 
   // ================= OFFLINE KEY =================
-  if (key === OFFLINE_KEY) {
+  if (OFFLINE_KEYS.includes(key)) {
+
     isLoggedIn = true;
     currentKey = key;
 
     localStorage.setItem("HEADLOCK_KEY", key);
-    localStorage.setItem("HEADLOCK_OFFLINE_EXPIRE", OFFLINE_EXPIRE.getTime());
+
+    localStorage.setItem(
+      "HEADLOCK_OFFLINE_EXPIRE",
+      OFFLINE_EXPIRE.getTime()
+    );
+
+    keyInput.value = "";
 
     showPage("mainScreen");
+
     showToggleToast("Đăng nhập OFFLINE thành công! (3 ngày)");
+
     return;
   }
+
+  // ================= SERVER KEY =================
 
   // ================= SERVER KEY =================
   loginBtn.disabled = true;
@@ -390,7 +417,13 @@ const handleLogin = async () => {
     toggle.addEventListener("click", async () => {
       if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-      const check = await activateKey(currentKey);
+      let check = { success: true };
+
+if (!OFFLINE_KEYS.includes(currentKey)) {
+  check = await activateKey(currentKey);
+}
+
+if (!check.success)
       if (!check.success) {
         showToggleToast("Key hết hạn!");
         localStorage.removeItem("HEADLOCK_KEY");
