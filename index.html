@@ -172,7 +172,8 @@
     <div class="toggle-toast" id="toggleToast"></div>
     <script>
 // ==================== CẤU HÌNH SERVER ====================
-const SERVER_URL = "https://serverbrian.infinityfreeapp.com";
+const API_URL =
+"https://serverkeyhuyminh.quannguyendinh508.workers.dev";
 
 // ==================== BIẾN TOÀN CỤC ====================
 let isLoggedIn = false;
@@ -185,66 +186,100 @@ function generateDeviceId() {
   return id;
 }
 // ==================== GỌI SERVER KIỂM TRA KEY ====================
-async function activateKey(key) {
+
+
+// ===== VERIFY =====
+async function verifyKey(key) {
 
   try {
 
-    const response = await fetch(
-      `https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${encodeURIComponent(key)}`,
+    const res = await fetch(
+      API_URL + "/api/check?key=" +
+      encodeURIComponent(key),
       {
         method: "GET",
         cache: "no-cache"
       }
     );
 
-    // nếu server lỗi
-    if (!response.ok) {
-      return {
-        success: false,
-        data: {
-          message: "Server lỗi!"
-        }
-      };
-    }
+    const data = await res.json();
 
-    const data = await response.json();
+    console.log("VERIFY:", data);
 
-    console.log("CHECK KEY:", data);
-
-    // key hợp lệ
     if (
-      data.success === true &&
+      data.ok === true &&
       data.data &&
-      data.data.status === "active"
+      data.data.revoked === false
     ) {
 
       return {
-        success: true,
-        data: {
-          expiresAt: data.data.expired_at,
-          message: "Key hợp lệ"
-        }
+        ok: true,
+        data: data.data
       };
 
     }
 
-    // key lỗi
     return {
-      success: false,
-      data: {
-        message: data.message || "Key không hợp lệ!"
-      }
+      ok: false,
+      error: "Key không hợp lệ!"
     };
 
-  } catch (err) {
+  } catch(err) {
 
-    console.error("FETCH ERROR:", err);
+    console.error(err);
 
     return {
-      success: false,
-      data: {
-        message: "Không kết nối được server!"
+      ok: false,
+      error: "Không kết nối server!"
+    };
+
+  }
+
+}
+
+// ===== ACTIVATE =====
+async function activateKey(key) {
+
+  try {
+
+    const res = await fetch(
+      API_URL + "/api/check?key=" +
+      encodeURIComponent(key),
+      {
+        method: "GET",
+        cache: "no-cache"
       }
+    );
+
+    const data = await res.json();
+
+    console.log("ACTIVATE:", data);
+
+    if (
+      data.ok === true &&
+      data.data &&
+      data.data.revoked === false
+    ) {
+
+      return {
+        ok: true,
+        data: data.data
+      };
+
+    }
+
+    return {
+      ok: false,
+      error: "Key không hợp lệ!"
+    };
+
+  } catch(err) {
+
+    console.error(err);
+
+    return {
+      ok: false,
+      error: "Không kết nối server!"
     };
 
   }
