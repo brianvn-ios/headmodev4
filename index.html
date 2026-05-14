@@ -189,31 +189,48 @@ async function activateKey(key) {
 
   try {
 
-    const res = await fetch(
-      `https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${encodeURIComponent(key)}`,
-      {
-        method: "GET"
-      }
-    );
+    // timeout chống treo
+    const controller = new AbortController();
+
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 10000);
+
+    // dùng proxy tránh InfinityFree chặn fetch
+    const url =
+      "https://corsproxy.io/?" +
+      encodeURIComponent(
+        `https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${key}`
+      );
+
+    const res = await fetch(url, {
+      method: "GET",
+      signal: controller.signal,
+      cache: "no-cache"
+    });
+
+    clearTimeout(timeout);
 
     const text = await res.text();
 
-    console.log(text);
+    console.log("SERVER:", text);
 
     let data;
 
     try {
       data = JSON.parse(text);
-    } catch {
+    } catch (e) {
+
       return {
         success: false,
         data: {
           message: "Server trả dữ liệu lỗi!"
         }
       };
+
     }
 
-    // KEY HỢP LỆ
+    // key hợp lệ
     if (
       data.success === true &&
       data.data &&
@@ -230,7 +247,7 @@ async function activateKey(key) {
 
     }
 
-    // KEY DIE
+    // key lỗi
     return {
       success: false,
       data: {
@@ -250,6 +267,24 @@ async function activateKey(key) {
     };
 
   }
+
+}
+function showToggleToast(message) {
+
+  const toast =
+    document.getElementById("toggleToast");
+
+  if (!toast) return;
+
+  toast.textContent = message;
+
+  toast.classList.add("active");
+
+  clearTimeout(window.toastTimeout);
+
+  window.toastTimeout = setTimeout(() => {
+    toast.classList.remove("active");
+  }, 2500);
 
 }
 // ==================== TOAST THÔNG BÁO ====================
