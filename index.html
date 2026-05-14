@@ -359,32 +359,61 @@ document.addEventListener("DOMContentLoaded", async () => {
   const loginBtn = document.getElementById("loginBtn");
 
   const handleLogin = async () => {
-    const key = keyInput.value.trim();
-    if (!key) {
-      showToggleToast("Nhập key đi bro!");
-      return;
-    }
 
-    loginBtn.disabled = true;
-    loginBtn.textContent = "Đang kiểm tra key...";
+  const key = keyInput.value.trim();
+
+  if (!key) {
+    showToggleToast("Nhập key đi bro!");
+    return;
+  }
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Đang kiểm tra key...";
+
+  try {
 
     const result = await activateKey(key);
 
     if (result.success) {
+
       isLoggedIn = true;
       currentKey = key;
+
       localStorage.setItem("HEADLOCK_KEY", key);
+
       keyInput.value = "";
+
       showPage("mainScreen");
-      const daysLeft = getDaysLeft(result.data.expiresAt);
-      showToggleToast(`Đăng nhập thành công!${daysLeft}`);
+
+      const daysLeft =
+        getDaysLeft(result.data.expiresAt);
+
+      showToggleToast(
+        `Đăng nhập thành công! Còn ${daysLeft}`
+      );
+
     } else {
-      showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
+
+      showToggleToast(
+        result.data.message || "Key sai!"
+      );
+
     }
+
+  } catch (e) {
+
+    console.error(e);
+
+    showToggleToast("Lỗi đăng nhập!");
+
+  } finally {
 
     loginBtn.disabled = false;
     loginBtn.textContent = "LOGIN";
-  };
+
+  }
+
+};
 
   loginBtn.addEventListener("click", handleLogin);
   keyInput.addEventListener("keypress", e => e.key === "Enter" && handleLogin());
@@ -677,39 +706,48 @@ function openFreeFireApp() {
 }
 </script>
 <script>
-// CHỈ CHẶN XEM SOURCE CODE (Ctrl+U + F12 + Chuột phải View Source)
-// Các hành động khác vẫn bình thường – form admin không bị ảnh hưởng
+// CHỈ CHẶN VIEW SOURCE
 
-// Cửa hậu cho bạn (tuỳ chọn): thêm ?admin hoặc ?123 vào URL là tắt hết chặn
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has('admin') || urlParams.has('123')) return;
 
-// 1. Chặn Ctrl+U / Cmd+U
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
+// chỉ chạy block bên dưới nếu KHÔNG có ?admin
+if (!(urlParams.has('admin') || urlParams.has('123'))) {
+
+  // Chặn Ctrl+U
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // Chặn F12
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || e.keyCode === 123) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // Chặn chuột phải
+  document.addEventListener('contextmenu', e => {
+
+    const tag = e.target.tagName.toUpperCase();
+
+    if (
+      tag === 'INPUT' ||
+      tag === 'TEXTAREA' ||
+      tag === 'BUTTON' ||
+      tag === 'SELECT'
+    ) {
+      return;
+    }
+
     e.preventDefault();
-    e.stopPropagation();
-  }
-}, true);
 
-// 2. Chặn F12 (mở DevTools)
-document.addEventListener('keydown', e => {
-  if (e.key === 'F12' || e.keyCode === 123) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-}, true);
+  }, true);
 
-// 3. Chặn chuột phải → chỉ chặn menu "View Page Source", không chặn chọn text hay input
-document.addEventListener('contextmenu', e => {
-  // Nếu người dùng click chuột phải vào input, textarea, button → cho phép menu bình thường
-  const tag = e.target.tagName.toUpperCase();
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') {
-    return; // không chặn
-  }
-  e.preventDefault();
-}, true);
-
+}
 </script>
 
 </body>
