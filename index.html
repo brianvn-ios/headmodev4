@@ -237,36 +237,45 @@ async function activateKey(key) {
 }
 
 // ==================== TOAST THÔNG BÁO ====================
-function showToggleToast(msg) {
-  const toast = document.getElementById("toggleToast");
-  if (!toast) return;
-  toast.textContent = msg;
-  toast.classList.add("active");
-  clearTimeout(window.toastTimeout);
-  window.toastTimeout = setTimeout(() => toast.classList.remove("active"), 2000);
-}
-
-// Tính ngày còn lại (xử lý định dạng ngày VN)
 function getDaysLeft(expiresAt) {
+
   if (!expiresAt) return "";
-  
+
   try {
-    const [datePart, timePart] = expiresAt.split(' ');
-    const [day, month, year] = datePart.split('/');
-    
-    const expiryDate = new Date(year, month - 1, day);
-    if (timePart) {
-      const [hours, minutes] = timePart.split(':');
-      expiryDate.setHours(parseInt(hours), parseInt(minutes));
-    }
-    
+
+    // đổi format cho Safari iOS
+    const fixedDate =
+      expiresAt.replace(" ", "T");
+
+    const expiryDate =
+      new Date(fixedDate);
+
     const now = new Date();
-    const diff = expiryDate - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    
-    return days > 0 ? `${days} ngày` : (days === 0 ? "Hôm nay hết hạn" : "ĐÃ HẾT HẠN");
-  } catch (error) {
-    return "không xác định";
+
+    const diff =
+      expiryDate.getTime() - now.getTime();
+
+    const days =
+      Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (isNaN(days)) {
+      return "Không xác định";
+    }
+
+    if (days < 0) {
+      return "ĐÃ HẾT HẠN";
+    }
+
+    if (days === 0) {
+      return "Hôm nay hết hạn";
+    }
+
+    return `${days} ngày`;
+
+  } catch (e) {
+
+    return "Không xác định";
+
   }
 }
 
