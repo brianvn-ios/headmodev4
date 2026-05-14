@@ -469,7 +469,7 @@ document.querySelectorAll(".back-btn").forEach(btn => {
       if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
       const check = await activateKey(currentKey);
-      if (!check.success) {
+      if (!check.ok) {
         showToggleToast("Key hết hạn!");
         localStorage.removeItem("HEADLOCK_KEY");
         isLoggedIn = false;
@@ -488,7 +488,7 @@ document.querySelectorAll(".back-btn").forEach(btn => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
     const check = await activateKey(currentKey);
-    if (!check.success) {
+    if (!check.ok) {
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
       isLoggedIn = false;
@@ -506,12 +506,13 @@ document.querySelectorAll(".back-btn").forEach(btn => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
     const check = await activateKey(currentKey);
-    if (!check.ok)
-      showToggleToast("Key hết hạn!");
-      localStorage.removeItem("HEADLOCK_KEY");
-      isLoggedIn = false;
-      showPage("loginScreen");
-      return;
+    if (!check.ok) {
+     showToggleToast("Key hết hạn!");
+     localStorage.removeItem("HEADLOCK_KEY");
+     isLoggedIn = false;
+     showPage("loginScreen");
+     return;
+  }
     }
 
     // Chỉ bật nút + modal, KHÔNG đụng vào toggle trên
