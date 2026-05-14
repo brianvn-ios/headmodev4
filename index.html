@@ -693,18 +693,50 @@ document.querySelector('.modal-btn.success')?.addEventListener('click', () => {
 });
 
 // Hàm mở Free Fire cực mạnh – hoạt động ngon lành cả trong Web Clip
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const successBtn = document.querySelector('.modal-btn.success');
+
+  if (successBtn) {
+
+    successBtn.addEventListener('click', () => {
+
+      // đóng popup
+      const modal = document.getElementById('successModal');
+      const overlay = document.getElementById('overlay');
+
+      modal?.classList.remove('active');
+      overlay?.classList.remove('active');
+
+      // mở Free Fire
+      setTimeout(() => {
+        openFreeFireApp();
+      }, 300);
+
+    });
+
+  }
+
+});
+
+// mở app Free Fire
 function openFreeFireApp() {
-    const scheme = "freefireth://"; // URL scheme chính thức của Free Fire (2025 vẫn dùng tốt)
-    const appStore = "https://apps.apple.com/vn/app/garena-free-fire/id1300146617";
 
-    // Cách 1: Dùng iframe ẩn (cách mạnh nhất trên iOS 15–18, kể cả trong Web Clip)
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = scheme;
-    document.body.appendChild(iframe);
+  const scheme = "freefireth://";
 
-    // Cách 2: Dự phòng bằng location.href (vẫn cần để chắc ăn)
+  // iframe
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = scheme;
+
+  document.body.appendChild(iframe);
+
+  // fallback
+  setTimeout(() => {
     window.location.href = scheme;
+  }, 100);
+
 }
 </script>
 <script>
