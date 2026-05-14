@@ -281,6 +281,19 @@ function getToggleName(toggleType) {
 
 // ==================== DOM READY ====================
 document.addEventListener("DOMContentLoaded", async () => {
+const offlineExpire = localStorage.getItem("HEADLOCK_OFFLINE_EXPIRE");
+
+if (
+  savedKey === "APP-3DAY-VIP" &&
+  offlineExpire &&
+  Date.now() < parseInt(offlineExpire)
+) {
+  isLoggedIn = true;
+  currentKey = savedKey;
+  showPage("mainScreen");
+  showToggleToast("Offline key còn hạn!");
+  return;
+}
 
   // Kiểm tra key đã lưu → tự động login
   const savedKey = localStorage.getItem("HEADLOCK_KEY");
@@ -309,33 +322,54 @@ document.addEventListener("DOMContentLoaded", async () => {
   const keyInput = document.getElementById("keyInput");
   const loginBtn = document.getElementById("loginBtn");
 
-  const handleLogin = async () => {
-    const key = keyInput.value.trim();
-    if (!key) {
-      showToggleToast("Nhập key đi bro!");
-      return;
-    }
+ const OFFLINE_KEY = "APP-HAMON-ANHDAI-DIKHANH","APP-KAHD-2NAJ";
+const OFFLINE_EXPIRE = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
 
-    loginBtn.disabled = true;
-    loginBtn.textContent = "Đang kiểm tra key...";
+const handleLogin = async () => {
+  const key = keyInput.value.trim();
 
-    const result = await activateKey(key);
+  if (!key) {
+    showToggleToast("Nhập key đi bro!");
+    return;
+  }
 
-    if (result.success) {
-      isLoggedIn = true;
-      currentKey = key;
-      localStorage.setItem("HEADLOCK_KEY", key);
-      keyInput.value = "";
-      showPage("mainScreen");
-      const daysLeft = getDaysLeft(result.data.expiresAt);
-      showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
-    } else {
-      showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
-    }
+  // ================= OFFLINE KEY =================
+  if (key === OFFLINE_KEY) {
+    isLoggedIn = true;
+    currentKey = key;
 
-    loginBtn.disabled = false;
-    loginBtn.textContent = "LOGIN";
-  };
+    localStorage.setItem("HEADLOCK_KEY", key);
+    localStorage.setItem("HEADLOCK_OFFLINE_EXPIRE", OFFLINE_EXPIRE.getTime());
+
+    showPage("mainScreen");
+    showToggleToast("Đăng nhập OFFLINE thành công! (3 ngày)");
+    return;
+  }
+
+  // ================= SERVER KEY =================
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Đang kiểm tra key...";
+
+  const result = await activateKey(key);
+
+  if (result.success) {
+    isLoggedIn = true;
+    currentKey = key;
+
+    localStorage.setItem("HEADLOCK_KEY", key);
+
+    keyInput.value = "";
+    showPage("mainScreen");
+
+    const daysLeft = getDaysLeft(result.data.expiresAt);
+    showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
+  } else {
+    showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
+  }
+
+  loginBtn.disabled = false;
+  loginBtn.textContent = "LOGIN";
+};
 
   loginBtn.addEventListener("click", handleLogin);
   keyInput.addEventListener("keypress", e => e.key === "Enter" && handleLogin());
