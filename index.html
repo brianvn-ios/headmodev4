@@ -172,7 +172,7 @@
     <div class="toggle-toast" id="toggleToast"></div>
     <script>
 // ==================== CẤU HÌNH SERVER ====================
-const SERVER_URL = "https://api-server-key.tranphat1357t.workers.dev";
+const SERVER_URL = "https://serverbrian.infinityfreeapp.com";
 
 // ==================== BIẾN TOÀN CỤC ====================
 let isLoggedIn = false;
@@ -187,35 +187,39 @@ function generateDeviceId() {
 // ==================== GỌI SERVER KIỂM TRA KEY ====================
 async function activateKey(key) {
   try {
-    const res = await fetch(`${SERVER_URL}/api/activate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        key: key.trim(),
-        deviceId: deviceId
-      })
-    });
 
-    // kiểm tra response có hợp lệ không
-    if (!res.ok) {
-      return {
-        success: false,
-        data: {
-          message: `Server lỗi (${res.status})`
-        }
-      };
-    }
+    const url =
+      `https://corsproxy.io/?https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${encodeURIComponent(key)}`;
+
+    const res = await fetch(url);
 
     const data = await res.json();
 
-    return {
-      success: data.ok === true || data.valid === true,
-      data: data
-    };
+    console.log(data);
+
+    if (data.success === true) {
+
+      return {
+        success: true,
+        data: {
+          expiresAt: data.data.expired_at,
+          message: "Key hợp lệ"
+        }
+      };
+
+    } else {
+
+      return {
+        success: false,
+        data: {
+          message: data.message || "Key không hợp lệ"
+        }
+      };
+
+    }
 
   } catch (err) {
+
     console.error(err);
 
     return {
@@ -224,6 +228,7 @@ async function activateKey(key) {
         message: "Không kết nối được server!"
       }
     };
+
   }
 }
 
