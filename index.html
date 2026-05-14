@@ -186,18 +186,34 @@ function generateDeviceId() {
 }
 // ==================== GỌI SERVER KIỂM TRA KEY ====================
 async function activateKey(key) {
+
   try {
 
-    const url =
-      `https://corsproxy.io/?https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${encodeURIComponent(key)}`;
+    const res = await fetch(
+      `https://serverbrian.infinityfreeapp.com/index.php?action=check&key=${encodeURIComponent(key)}`,
+      {
+        method: "GET"
+      }
+    );
 
-    const res = await fetch(url);
+    const text = await res.text();
 
-    const data = await res.json();
+    console.log(text);
 
-    console.log(data);
+    let data;
 
-    // CHECK THÀNH CÔNG
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return {
+        success: false,
+        data: {
+          message: "Server trả dữ liệu lỗi!"
+        }
+      };
+    }
+
+    // KEY HỢP LỆ
     if (
       data.success === true &&
       data.data &&
@@ -214,11 +230,11 @@ async function activateKey(key) {
 
     }
 
-    // KEY DIE / HẾT HẠN
+    // KEY DIE
     return {
       success: false,
       data: {
-        message: "Key không hợp lệ hoặc hết hạn!"
+        message: data.message || "Key không hợp lệ!"
       }
     };
 
@@ -234,8 +250,8 @@ async function activateKey(key) {
     };
 
   }
-}
 
+}
 // ==================== TOAST THÔNG BÁO ====================
 function getDaysLeft(expiresAt) {
 
