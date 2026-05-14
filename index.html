@@ -423,14 +423,13 @@ if (!OFFLINE_KEYS.includes(currentKey)) {
   check = await activateKey(currentKey);
 }
 
-if (!check.success)
-      if (!check.success) {
-        showToggleToast("Key hết hạn!");
-        localStorage.removeItem("HEADLOCK_KEY");
-        isLoggedIn = false;
-        showPage("loginScreen");
-        return;
-      }
+if (!check.success) {
+  showToggleToast("Key hết hạn!");
+  localStorage.removeItem("HEADLOCK_KEY");
+  isLoggedIn = false;
+  showPage("loginScreen");
+  return;
+}
 
       toggle.classList.toggle("active");
       const label = toggle.closest(".toggle-item")?.querySelector(".toggle-label span:last-child")?.textContent || "";
@@ -442,7 +441,11 @@ if (!check.success)
   document.querySelector('.toggle-switch[data-toggle="headlock"]')?.addEventListener("click", async () => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-    const check = await activateKey(currentKey);
+    let check = { success: true };
+
+if (!OFFLINE_KEYS.includes(currentKey)) {
+  check = await activateKey(currentKey);
+}
     if (!check.success) {
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
