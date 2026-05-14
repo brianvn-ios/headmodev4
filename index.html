@@ -640,14 +640,19 @@ document.getElementById("onBtn")?.addEventListener("click", async () => {
     button.appendChild(sparkle);
   }
 
-  function addInputSparkles() {
-    const input = document.querySelector('.key-input');
-    if (!input || input.querySelector('.input-sparkle')) return;
-    
-    const sparkle = document.createElement('div');
-    sparkle.className = 'input-sparkle';
-    input.appendChild(sparkle);
-  }
+function addInputSparkles() {
+  const input = document.querySelector('.key-input');
+  if (!input) return;
+
+  const wrapper = input.parentElement;
+
+  if (wrapper.querySelector('.input-sparkle')) return;
+
+  const sparkle = document.createElement('div');
+  sparkle.className = 'input-sparkle';
+
+  wrapper.appendChild(sparkle);
+}
 
   function addSocialSparkles() {
     const socialButtons = document.querySelectorAll('.social-btn');
@@ -675,25 +680,50 @@ document.getElementById("onBtn")?.addEventListener("click", async () => {
     });
   }
 });
-</script>
-    <script>
-// Đoạn này thay thế hoàn toàn đoạn code cũ của bạn
-document.querySelector('.modal-btn.success')?.addEventListener('click', () => {
-    // 1. Đóng popup trước (giữ nguyên hiệu ứng của bạn)
-    const modal   = document.getElementById('successModal');
-    const overlay = document.getElementById('overlay');
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (modal)   modal.classList.remove('active');
-    if (overlay) overlay.classList.remove('active');
+  const successBtn = document.querySelector('.modal-btn.success');
 
-    // 2. Đợi popup đóng xong rồi mới mở Free Fire (rất quan trọng để không bị Safari chặn)
-    setTimeout(() => {
+  if (successBtn) {
+
+    successBtn.addEventListener('click', () => {
+
+      // đóng popup
+      const modal = document.getElementById('successModal');
+      const overlay = document.getElementById('overlay');
+
+      modal?.classList.remove('active');
+      overlay?.classList.remove('active');
+
+      // mở Free Fire
+      setTimeout(() => {
         openFreeFireApp();
-    }, 400); // 400ms là ngọt nhất – bạn có thể giảm xuống 300 nếu muốn nhanh hơn
+      }, 300);
+
+    });
+
+  }
+
 });
 
-// Hàm mở Free Fire cực mạnh – hoạt động ngon lành cả trong Web Clip
-<script>
+// mở app Free Fire
+function openFreeFireApp() {
+
+  const scheme = "freefireth://";
+
+  // iframe
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = scheme;
+
+  document.body.appendChild(iframe);
+
+  // fallback
+  setTimeout(() => {
+    window.location.href = scheme;
+  }, 100);
+
+}
 document.addEventListener("DOMContentLoaded", () => {
 
   const successBtn = document.querySelector('.modal-btn.success');
