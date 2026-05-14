@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const savedKey = localStorage.getItem("HEADLOCK_KEY");
   if (savedKey) {
     const check = await activateKey(savedKey);
-    if (check.success) {
+    if (check.ok) {
       isLoggedIn = true;
       currentKey = savedKey;
       showPage("mainScreen");
@@ -409,7 +409,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const result = await activateKey(key);
 
-    if (result.success) {
+    console.log(result);
+
+    if (result.ok) {
 
       isLoggedIn = true;
       currentKey = key;
@@ -420,17 +422,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       showPage("mainScreen");
 
-      const daysLeft =
-        getDaysLeft(result.data.expiresAt);
-
-      showToggleToast(
-        `Đăng nhập thành công! Còn ${daysLeft}`
-      );
+      showToggleToast("Đăng nhập thành công!");
 
     } else {
 
       showToggleToast(
-        result.data.message || "Key sai!"
+        result.error || "Key sai!"
       );
 
     }
@@ -509,7 +506,7 @@ document.querySelectorAll(".back-btn").forEach(btn => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
     const check = await activateKey(currentKey);
-    if (!check.success) {
+    if (!check.ok)
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
       isLoggedIn = false;
