@@ -460,10 +460,16 @@ if (!OFFLINE_KEYS.includes(currentKey)) {
   });
 
   // ==================== NÚT ON / OFF DƯỚI RIÊNG BIỆT (chỉ điều khiển nút + modal, không ảnh hưởng toggle trên) ====================
-  document.getElementById("onBtn")?.addEventListener("click", async () => {
+document.getElementById("onBtn")?.addEventListener("click", async () => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-    const check = await activateKey(currentKey);
+    let check = { success: true };
+
+    // Chỉ check server nếu KHÔNG phải offline key
+    if (!OFFLINE_KEYS.includes(currentKey)) {
+      check = await activateKey(currentKey);
+    }
+
     if (!check.success) {
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
