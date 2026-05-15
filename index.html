@@ -7,169 +7,163 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <!-- SPLASH SCREEN -->
-    <div class="page splash-screen active" id="splashScreen">
-        <div class="logo-container">
-            <div class="logo-placeholder">
-                <img id="splashLogo" src="images/logo.png" alt="">
-            </div>
-            <div class="premium-text">HEADMODE</div>
-        </div>
-        <div class="tap-text">Tap anywhere to continue</div>
-    </div>
+<body style="margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif;">
 
-    <!-- LOGIN SCREEN -->
-    <div class="page login-screen" id="loginScreen">
-        <div class="login-header">
-            <button class="back-btn" id="loginBackBtn">← Back</button>
-            <h1>HeadMode</h1>
-            <div class="login-logo">
-                <div class="login-logo-placeholder">
-                   <img id="loginLogo" src="images/logo.png" alt="">
-                </div>
-            </div>
-            <p class="key-login-text">KEY LOGIN</p>
+<div id="maintenanceScreen">
+    <div class="lock-box">
+        <div class="lock-icon">🔒</div>
+
+        <h1>PANEL TẠM THỜI BỊ KHÓA</h1>
+
+        <p>
+            Hệ thống đang được sửa lỗi và nâng cấp.<br>
+            Vui lòng chờ trong giây lát.
+        </p>
+
+        <div class="loading-bar">
+            <div class="loading-fill"></div>
         </div>
 
-        <div class="login-form">
-            <input type="text" class="key-input" placeholder="Enter your key..." id="keyInput">
-            <button class="login-btn" id="loginBtn">LOGIN</button>
-        </div>
-
-        <div class="contact-section">
-            <h3>CONTACT</h3>
-            <div class="social-buttons">
-                <div class="social-btn zalo"><img src="images/zalo.png" alt=""></div>
-                <div class="social-btn facebook"><img style="width:80px !important;" src="images/fb.webp" alt=""></div>
-            </div>
-            <p class="footer-text">By Tuấn Anh</p>
+        <div class="wait-text">
+            Đang bảo trì hệ thống...
         </div>
     </div>
+</div>
 
-    <!-- MAIN SCREEN -->
-    <div class="page main-screen" id="mainScreen">
-        <div class="header">
-            <button class="back-btn" id="mainBackBtn">← Back</button>
-            <div class="header-title">
-                <h1>HeadMode</h1>
-                <p class="header-subtitle">By Tuấn Anh</p>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        <div class="main-content">
-            <div class="main-logo">
-                <img id="mainLogo" src="images/logo.png" alt="">
-            </div>
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at top,#1a1a1a,#000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
 
-            <div class="toggle-section">
-                <div class="toggle-item">
-                    <div class="toggle-label">
-                        <span class="toggle-icon">🎯</span>
-                        <span>AIMMODE</span>
-                    </div>
-                    <div class="toggle-switch" data-toggle="reg">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
+#maintenanceScreen{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+}
 
-                <div class="toggle-item">
-                    <div class="toggle-label">
-                        <span class="toggle-icon">🚀</span>
-                        <span>BUFF FPS</span>
-                    </div>
-                    <div class="toggle-switch" data-toggle="boot">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
+.lock-box{
+    width:100%;
+    max-width:420px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:35px 25px;
+    text-align:center;
+    box-shadow:
+    0 0 30px rgba(255,255,255,0.05),
+    0 0 80px rgba(0,0,0,0.8);
+    animation:fadeIn 0.7s ease;
+}
 
-                <div class="toggle-item">
-                    <div class="toggle-label">
-                        <span class="toggle-icon">💀</span>
-                        <span>HEADMODE</span>
-                    </div>
-                    <div class="toggle-switch" data-toggle="headlock">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
+.lock-icon{
+    font-size:70px;
+    margin-bottom:20px;
+    animation:pulse 2s infinite;
+}
 
-                <div class="toggle-item">
-                    <div class="toggle-label">
-                        <span class="toggle-icon">⚙️</span>
-                        <span>240HZ</span>
-                    </div>
-                    <div class="toggle-switch" data-toggle="fix">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-            </div>
+.lock-box h1{
+    font-size:28px;
+    margin-bottom:15px;
+    font-weight:800;
+    color:#ffffff;
+}
 
-            <div class="start-buttons">
-                <h3>STARTING FILES</h3>
-                <div class="button-group">
-                    <button class="start-btn on" id="onBtn">ON</button>
-                    <button class="start-btn off active" id="offBtn">OFF</button>
-                </div>
-            </div>
-        </div>
-    </div>
+.lock-box p{
+    font-size:15px;
+    color:#bdbdbd;
+    line-height:1.7;
+    margin-bottom:25px;
+}
 
-    <!-- INFO PANEL -->
-    <div class="info-panel" id="infoPanel">
-        <div class="info-header">
-            <h2>Info</h2>
-            <span class="close-btn" id="closeInfo">Done</span>
-        </div>
-        <div class="info-content">
-            <div class="info-item">
-                <div>
-                    <div class="info-item-text">Panel made By Tuấn Anh</div>
-                    <div class="info-item-subtext">0969618762</div>
-                </div>
-                <span class="info-icon"><i class="fa-solid fa-phone"></i></span>
-            </div>
-            <div class="info-item">
-                <div>
-                    <div class="info-item-text">FaceBook</div>
-                    <div class="info-item-subtext">Tuấn Ankkk</div>
-                </div>
-                <span class="info-icon"><i class="fa-brands fa-facebook"></i></span>
-            </div>
-            <div class="info-item">
-                <div>
-                    <div class="info-item-text">TikTok</div>
-                    <div class="info-item-subtext">@tanh.iloveyou</div>
-                </div>
-                <span class="info-icon"><i class="fa-brands fa-tiktok"></i></span>
-            </div>
-            <button class="update-btn">UPDATE TO NEW+</button>
-            <div class="copyright">
-                <strong>Copyright belongs to</strong>
-                <strong>Tuấn Anh Dev</strong>
-                <div style="margin-top: 10px;">Thank For Using</div>
-            </div>
-        </div>
-    </div>
+.loading-bar{
+    width:100%;
+    height:10px;
+    background:rgba(255,255,255,0.08);
+    border-radius:999px;
+    overflow:hidden;
+    margin-bottom:18px;
+}
 
-    <!-- SUCCESS MODAL -->
-    <div class="success-modal" id="successModal">
-        <button class="modal-btn success">
-            <span class="check-icon">✓</span>
-            <span>HeadLock Was Successful!</span>
-        </button>
-        <button class="modal-btn danger" id="turnOffBtn">
-            <span class="cross-icon">✕</span>
-            <span>Turn off HeadLock</span>
-        </button>
-    </div>
+.loading-fill{
+    width:40%;
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,#00ff99,#00c3ff);
+    animation:loading 1.5s infinite;
+}
 
-    <div class="overlay" id="overlay"></div>
-    <div class="toggle-toast" id="toggleToast"></div>
+.wait-text{
+    color:#00ffcc;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+@keyframes loading{
+    0%{
+        transform:translateX(-120%);
+    }
+    100%{
+        transform:translateX(350%);
+    }
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+        opacity:1;
+    }
+    50%{
+        transform:scale(1.08);
+        opacity:0.7;
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+
+<script>
+// KHÓA TOÀN BỘ TƯƠNG TÁC
+document.addEventListener("click", e => e.preventDefault(), true);
+document.addEventListener("touchstart", e => e.preventDefault(), true);
+document.addEventListener("keydown", e => e.preventDefault(), true);
+document.addEventListener("contextmenu", e => e.preventDefault(), true);
+
+// chống kéo
+document.body.style.overflow = "hidden";
+</script>
+
+</body>
     <script>
 // ==================== CẤU HÌNH SERVER ====================
 // ==================== CẤU HÌNH SERVER ====================
