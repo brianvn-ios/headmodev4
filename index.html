@@ -3,225 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HeadMode</title>
+    <title>Cyperlock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif;">
+<body>
+    <!-- SPLASH SCREEN -->
+    <div class="page splash-screen active" id="splashScreen">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img id="splashLogo" src="images/logo.png" alt="">
+            </div>
+            <div class="premium-text">PREMIUM</div>
+        </div>
+        <div class="tap-text">Tap anywhere to continue</div>
+    </div>
 
-<div id="maintenanceScreen">
-    <div class="lock-box">
-        <div class="lock-icon">🔒</div>
-
-        <h1>PANEL TẠM THỜI BỊ KHÓA</h1>
-
-        <p>
-            Hệ thống đang được sửa lỗi và nâng cấp.<br>
-            Vui lòng chờ trong giây lát.
-        </p>
-
-        <div class="loading-bar">
-            <div class="loading-fill"></div>
+    <!-- LOGIN SCREEN -->
+    <div class="page login-screen" id="loginScreen">
+        <div class="login-header">
+            <button class="back-btn" id="loginBackBtn">← Back</button>
+            <h1>Cyperlock</h1>
+            <div class="login-logo">
+                <div class="login-logo-placeholder">
+                   <img id="loginLogo" src="images/logo.png" alt="">
+                </div>
+            </div>
+            <p class="key-login-text">KEY LOGIN</p>
         </div>
 
-        <div class="wait-text">
-            Đang bảo trì hệ thống...
+        <div class="login-form">
+            <input type="text" class="key-input" placeholder="Enter your key..." id="keyInput">
+            <button class="login-btn" id="loginBtn">LOGIN</button>
+        </div>
+
+        <div class="contact-section">
+            <h3>CONTACT</h3>
+            <div class="social-buttons">
+                <div class="social-btn zalo"><img src="images/zalo.png" alt=""></div>
+                <div class="social-btn facebook"><img style="width:80px !important;" src="images/fb.webp" alt=""></div>
+            </div>
+            <p class="footer-text">by Huy Minh</p>
         </div>
     </div>
-</div>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+    <!-- MAIN SCREEN -->
+    <div class="page main-screen" id="mainScreen">
+        <div class="header">
+            <button class="back-btn" id="mainBackBtn">← Back</button>
+            <div class="header-title">
+                <h1>Cyperlock</h1>
+                <p class="header-subtitle">BY Huy Minh</p>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
 
-body{
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-    background:
-    radial-gradient(circle at top,#1a1a1a,#000);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-}
+        <div class="main-content">
+            <div class="main-logo">
+                <img id="mainLogo" src="images/logo.png" alt="">
+            </div>
 
-#maintenanceScreen{
-    position:fixed;
-    inset:0;
-    z-index:999999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    user-select:none;
-    -webkit-user-select:none;
-    touch-action:none;
-}
+            <div class="toggle-section">
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">🎯</span>
+                        <span>REG FILES</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="reg">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
 
-.lock-box{
-    width:100%;
-    max-width:420px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter:blur(15px);
-    border-radius:25px;
-    padding:35px 25px;
-    text-align:center;
-    box-shadow:
-    0 0 30px rgba(255,255,255,0.05),
-    0 0 80px rgba(0,0,0,0.8);
-    animation:fadeIn 0.7s ease;
-}
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">🚀</span>
+                        <span>BOOT RAM</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="boot">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
 
-.lock-icon{
-    font-size:70px;
-    margin-bottom:20px;
-    animation:pulse 2s infinite;
-}
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">💀</span>
+                        <span>HEADLOCK</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="headlock">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
 
-.lock-box h1{
-    font-size:28px;
-    margin-bottom:15px;
-    font-weight:800;
-    color:#ffffff;
-}
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">⚙️</span>
+                        <span>FIX RUNG</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="fix">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
 
-.lock-box p{
-    font-size:15px;
-    color:#bdbdbd;
-    line-height:1.7;
-    margin-bottom:25px;
-}
+            <div class="start-buttons">
+                <h3>STARTING FILES</h3>
+                <div class="button-group">
+                    <button class="start-btn on" id="onBtn">ON</button>
+                    <button class="start-btn off active" id="offBtn">OFF</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-.loading-bar{
-    width:100%;
-    height:10px;
-    background:rgba(255,255,255,0.08);
-    border-radius:999px;
-    overflow:hidden;
-    margin-bottom:18px;
-}
+    <!-- INFO PANEL -->
+    <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+            <h2>Info</h2>
+            <span class="close-btn" id="closeInfo">Done</span>
+        </div>
+        <div class="info-content">
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">Panel made by Huy Minh</div>
+                    <div class="info-item-subtext">0378881167</div>
+                </div>
+                <span class="info-icon"><i class="fa-solid fa-phone"></i></span>
+            </div>
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">FaceBook</div>
+                    <div class="info-item-subtext">Huy Minh</div>
+                </div>
+                <span class="info-icon"><i class="fa-brands fa-facebook"></i></span>
+            </div>
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">TikTok</div>
+                    <div class="info-item-subtext">@huyminh.loveyoutiktok</div>
+                </div>
+                <span class="info-icon"><i class="fa-brands fa-tiktok"></i></span>
+            </div>
+            <button class="update-btn">UPDATE TO NEW+</button>
+            <div class="copyright">
+                <strong>Copyright belongs to</strong>
+                <strong>Huy Minh Dev</strong>
+                <div style="margin-top: 10px;">Thank For Using</div>
+            </div>
+        </div>
+    </div>
 
-.loading-fill{
-    width:40%;
-    height:100%;
-    border-radius:999px;
-    background:linear-gradient(90deg,#00ff99,#00c3ff);
-    animation:loading 1.5s infinite;
-}
+    <!-- SUCCESS MODAL -->
+    <div class="success-modal" id="successModal">
+        <button class="modal-btn success">
+            <span class="check-icon">✓</span>
+            <span>HeadLock Was Successful!</span>
+        </button>
+        <button class="modal-btn danger" id="turnOffBtn">
+            <span class="cross-icon">✕</span>
+            <span>Turn off HeadLock</span>
+        </button>
+    </div>
 
-.wait-text{
-    color:#00ffcc;
-    font-size:14px;
-    letter-spacing:1px;
-}
+    <div class="overlay" id="overlay"></div>
+    <div class="toggle-toast" id="toggleToast"></div>
+ <script type="module">
 
-@keyframes loading{
-    0%{
-        transform:translateX(-120%);
-    }
-    100%{
-        transform:translateX(350%);
-    }
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-@keyframes pulse{
-    0%,100%{
-        transform:scale(1);
-        opacity:1;
-    }
-    50%{
-        transform:scale(1.08);
-        opacity:0.7;
-    }
-}
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-</style>
+const firebaseConfig = {
 
-<script>
-// KHÓA TOÀN BỘ TƯƠNG TÁC
-document.addEventListener("click", e => e.preventDefault(), true);
-document.addEventListener("touchstart", e => e.preventDefault(), true);
-document.addEventListener("keydown", e => e.preventDefault(), true);
-document.addEventListener("contextmenu", e => e.preventDefault(), true);
+  apiKey: "AIzaSyCG0gzMq1UDYH-_iCjexsJuy1OY9qQLD1E",
 
-// chống kéo
-document.body.style.overflow = "hidden";
-</script>
+  authDomain: "serverkey-e7cc6.firebaseapp.com",
 
-</body>
-    <script>
-// ==================== CẤU HÌNH SERVER ====================
-// ==================== CẤU HÌNH SERVER ====================
-const SERVER_URL = "https://serverkeyhuyminh.quannguyendinh508.workers.dev";
+  databaseURL: "https://serverkey-e7cc6-default-rtdb.firebaseio.com",
+
+  projectId: "serverkey-e7cc6",
+
+  storageBucket: "serverkey-e7cc6.firebasestorage.app",
+
+  messagingSenderId: "744043128336",
+
+  appId: "1:744043128336:web:2ec4b145220d3c7bbacc95"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 // ==================== BIẾN TOÀN CỤC ====================
+
 let isLoggedIn = false;
 let currentKey = "";
-let deviceId = localStorage.getItem("HEADLOCK_DEVICE_ID") || generateDeviceId();
+
+let deviceId =
+localStorage.getItem("HEADLOCK_DEVICE_ID")
+|| generateDeviceId();
 
 function generateDeviceId() {
-  const id = "HEADLOCK-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9);
-  localStorage.setItem("HEADLOCK_DEVICE_ID", id);
+
+  const id =
+  "HEADLOCK-" +
+  Date.now() +
+  "-" +
+  Math.random().toString(36).substr(2, 9);
+
+  localStorage.setItem(
+    "HEADLOCK_DEVICE_ID",
+    id
+  );
+
   return id;
 }
-// ==================== GỌI SERVER KIỂM TRA KEY ====================
-async function activateKey(key) {
-  try {
-    const res = await fetch(`${SERVER_URL}/api/activate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        key: key.trim(),
-        deviceId: deviceId
-      })
-    });
 
-    // kiểm tra response có hợp lệ không
-    if (!res.ok) {
+// ==================== KIỂM TRA KEY FIREBASE ====================
+
+async function activateKey(key) {
+
+  try {
+
+    const snapshot =
+    await get(ref(db, "keys/" + key));
+
+    if (!snapshot.exists()) {
+
       return {
         success: false,
         data: {
-          message: `Server lỗi (${res.status})`
+          message: "❌ Key không tồn tại!"
         }
       };
+
     }
 
-    const data = await res.json();
+    const data = snapshot.val();
+
+    if (data.active === false) {
+
+      return {
+        success: false,
+        data: {
+          message: "🚫 Key đã bị khóa!"
+        }
+      };
+
+    }
+
+    if (Date.now() > data.expire) {
+
+      return {
+        success: false,
+        data: {
+          message: "⏰ Key đã hết hạn!"
+        }
+      };
+
+    }
+
+    if (!data.devices) {
+      data.devices = {};
+    }
+
+    const devices =
+    Object.keys(data.devices);
+
+    if (
+      !data.devices[deviceId] &&
+      devices.length >= data.maxDevices
+    ) {
+
+      return {
+        success: false,
+        data: {
+          message: "📱 Key đã đủ thiết bị!"
+        }
+      };
+
+    }
+
+    if (!data.devices[deviceId]) {
+
+      data.devices[deviceId] = true;
+
+      await update(
+        ref(db, "keys/" + key),
+        {
+          devices: data.devices
+        }
+      );
+
+    }
 
     return {
-      success: data.ok === true || data.valid === true,
-      data: data
+      success: true,
+      data: {
+        expiresAt:
+        new Date(data.expire).toLocaleString(),
+        message: "✅ Key hợp lệ!"
+      }
     };
 
   } catch (err) {
+
     console.error(err);
 
     return {
       success: false,
       data: {
-        message: "Không kết nối được server!"
+        message: "❌ Lỗi Firebase!"
       }
     };
-  }
-}
 
+  }
+
+}
 // ==================== TOAST THÔNG BÁO ====================
 function showToggleToast(msg) {
   const toast = document.getElementById("toggleToast");
@@ -275,44 +381,16 @@ function getToggleName(toggleType) {
 
 // ==================== DOM READY ====================
 document.addEventListener("DOMContentLoaded", async () => {
-// ==================== OFFLINE KEY ====================
-
-  const OFFLINE_KEYS = [
-    "APP-HAMON-ANHDAI-DIKHANH",
-    "APP-KAHD-2NAJ"
-  ];
-
-  // Kiểm tra key đã lưu
-  const savedKey = localStorage.getItem("HEADLOCK_KEY");
-  const offlineExpire = localStorage.getItem("HEADLOCK_OFFLINE_EXPIRE");
-
-  if (
-    savedKey &&
-    OFFLINE_KEYS.includes(savedKey) &&
-    offlineExpire &&
-    Date.now() < parseInt(offlineExpire)
-  ) {
-    isLoggedIn = true;
-    currentKey = savedKey;
-
-    showPage("mainScreen");
-    showToggleToast("Offline key còn hạn!");
-    return;
-  }
 
   // Kiểm tra key đã lưu → tự động login
+  const savedKey = localStorage.getItem("HEADLOCK_KEY");
   if (savedKey) {
     const check = await activateKey(savedKey);
-
     if (check.success) {
       isLoggedIn = true;
       currentKey = savedKey;
-
       showPage("mainScreen");
-
-      showToggleToast(
-        `Chào mừng quay lại!! ${getDaysLeft(check.data.expiresAt)}`
-      );
+      showToggleToast(`Chào mừng quay lại!! ${getDaysLeft(check.data.expiresAt)}`);
     } else {
       localStorage.removeItem("HEADLOCK_KEY");
       showPage("splashScreen");
@@ -331,66 +409,33 @@ document.addEventListener("DOMContentLoaded", async () => {
   const keyInput = document.getElementById("keyInput");
   const loginBtn = document.getElementById("loginBtn");
 
-const OFFLINE_EXPIRE = new Date(
-  Date.now() + 3 * 24 * 60 * 60 * 1000
-);
+  const handleLogin = async () => {
+    const key = keyInput.value.trim();
+    if (!key) {
+      showToggleToast("Nhập key đi bro!");
+      return;
+    }
 
-const handleLogin = async () => {
-  const key = keyInput.value.trim();
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Đang kiểm tra key...";
 
-  if (!key) {
-    showToggleToast("Nhập key đi bro!");
-    return;
-  }
+    const result = await activateKey(key);
 
-  // ================= OFFLINE KEY =================
-  if (OFFLINE_KEYS.includes(key)) {
+    if (result.success) {
+      isLoggedIn = true;
+      currentKey = key;
+      localStorage.setItem("HEADLOCK_KEY", key);
+      keyInput.value = "";
+      showPage("mainScreen");
+      const daysLeft = getDaysLeft(result.data.expiresAt);
+      showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
+    } else {
+      showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
+    }
 
-    isLoggedIn = true;
-    currentKey = key;
-
-    localStorage.setItem("HEADLOCK_KEY", key);
-
-    localStorage.setItem(
-      "HEADLOCK_OFFLINE_EXPIRE",
-      OFFLINE_EXPIRE.getTime()
-    );
-
-    keyInput.value = "";
-
-    showPage("mainScreen");
-
-    showToggleToast("Đăng nhập OFFLINE thành công! (3 ngày)");
-
-    return;
-  }
-
-  // ================= SERVER KEY =================
-
-  // ================= SERVER KEY =================
-  loginBtn.disabled = true;
-  loginBtn.textContent = "Đang kiểm tra key...";
-
-  const result = await activateKey(key);
-
-  if (result.success) {
-    isLoggedIn = true;
-    currentKey = key;
-
-    localStorage.setItem("HEADLOCK_KEY", key);
-
-    keyInput.value = "";
-    showPage("mainScreen");
-
-    const daysLeft = getDaysLeft(result.data.expiresAt);
-    showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
-  } else {
-    showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
-  }
-
-  loginBtn.disabled = false;
-  loginBtn.textContent = "LOGIN";
-};
+    loginBtn.disabled = false;
+    loginBtn.textContent = "LOGIN";
+  };
 
   loginBtn.addEventListener("click", handleLogin);
   keyInput.addEventListener("keypress", e => e.key === "Enter" && handleLogin());
@@ -411,19 +456,14 @@ const handleLogin = async () => {
     toggle.addEventListener("click", async () => {
       if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-      let check = { success: true };
-
-if (!OFFLINE_KEYS.includes(currentKey)) {
-  check = await activateKey(currentKey);
-}
-
-if (!check.success) {
-  showToggleToast("Key hết hạn!");
-  localStorage.removeItem("HEADLOCK_KEY");
-  isLoggedIn = false;
-  showPage("loginScreen");
-  return;
-}
+      const check = await activateKey(currentKey);
+      if (!check.success) {
+        showToggleToast("Key hết hạn!");
+        localStorage.removeItem("HEADLOCK_KEY");
+        isLoggedIn = false;
+        showPage("loginScreen");
+        return;
+      }
 
       toggle.classList.toggle("active");
       const label = toggle.closest(".toggle-item")?.querySelector(".toggle-label span:last-child")?.textContent || "";
@@ -435,11 +475,7 @@ if (!check.success) {
   document.querySelector('.toggle-switch[data-toggle="headlock"]')?.addEventListener("click", async () => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-    let check = { success: true };
-
-if (!OFFLINE_KEYS.includes(currentKey)) {
-  check = await activateKey(currentKey);
-}
+    const check = await activateKey(currentKey);
     if (!check.success) {
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
@@ -454,16 +490,10 @@ if (!OFFLINE_KEYS.includes(currentKey)) {
   });
 
   // ==================== NÚT ON / OFF DƯỚI RIÊNG BIỆT (chỉ điều khiển nút + modal, không ảnh hưởng toggle trên) ====================
-document.getElementById("onBtn")?.addEventListener("click", async () => {
+  document.getElementById("onBtn")?.addEventListener("click", async () => {
     if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
 
-    let check = { success: true };
-
-    // Chỉ check server nếu KHÔNG phải offline key
-    if (!OFFLINE_KEYS.includes(currentKey)) {
-      check = await activateKey(currentKey);
-    }
-
+    const check = await activateKey(currentKey);
     if (!check.success) {
       showToggleToast("Key hết hạn!");
       localStorage.removeItem("HEADLOCK_KEY");
@@ -472,19 +502,13 @@ document.getElementById("onBtn")?.addEventListener("click", async () => {
       return;
     }
 
-
-  // Bật modal
-  document.getElementById("onBtn").classList.add("active");
-
-  document.getElementById("offBtn").classList.remove("active");
-
-  document.getElementById("successModal").classList.add("active");
-
-  document.getElementById("overlay").classList.add("active");
-
-  showToggleToast("Đã bật HEADLOCK");
-
-});
+    // Chỉ bật nút + modal, KHÔNG đụng vào toggle trên
+    document.getElementById("onBtn").classList.add("active");
+    document.getElementById("offBtn").classList.remove("active");
+    document.getElementById("successModal").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+    showToggleToast("Đã bật HEADLOCK");
+  });
 
   document.getElementById("offBtn")?.addEventListener("click", () => {
     document.getElementById("onBtn").classList.remove("active");
@@ -515,16 +539,16 @@ document.getElementById("onBtn")?.addEventListener("click", async () => {
   });
 
   // Social buttons
-  document.querySelector(".social-btn.zalo").addEventListener("click", () => alert("Zalo 0969618762"));
+  document.querySelector(".social-btn.zalo").addEventListener("click", () => alert("Zalo 0378881167"));
   document.querySelector(".social-btn.facebook").addEventListener("click", () => 
-    window.open("https://www.facebook.com/share/1Db82xRiSa/?mibextid=wwXIfr", "_blank")
+    window.open("https://www.facebook.com/nguoiyeuculaconcho?mibextid=wwXIfr&rdid=VxTpqhrSW1nwVvFk&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J9kVHWibU%2F%3Fmibextid%3DwwXIfr", "_blank")
   );
 
   document.querySelectorAll(".info-item").forEach(item => {
     const text = item.querySelector(".info-item-text").textContent;
-    if (text === "FaceBook") item.addEventListener("click", () => window.open("https://www.facebook.com/share/1Db82xRiSa/?mibextid=wwXIfr", "_blank"));
-    if (text === "TikTok") item.addEventListener("click", () => window.open("https://www.tiktok.com/@tanh.iloveyou", "_blank"));
-    if (text === "Panel made by Minh IOS") item.addEventListener("click", () => window.open("http://zalo.me/0969618762", "_blank"));
+    if (text === "FaceBook") item.addEventListener("click", () => window.open("https://www.facebook.com/nguoiyeuculaconcho?mibextid=wwXIfr&rdid=VxTpqhrSW1nwVvFk&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J9kVHWibU%2F%3Fmibextid%3DwwXIfr", "_blank"));
+    if (text === "TikTok") item.addEventListener("click", () => window.open("https://www.tiktok.com/@huyminh.loveyoutiktok?_r=1&_t=ZS-96BumzmRTfN", "_blank"));
+    if (text === "Panel made by Minh IOS") item.addEventListener("click", () => window.open("http://zalo.me/84378881167", "_blank"));
   });
 
   document.querySelector(".update-btn").addEventListener("click", () => {
@@ -634,19 +658,14 @@ document.getElementById("onBtn")?.addEventListener("click", async () => {
     button.appendChild(sparkle);
   }
 
-function addInputSparkles() {
-  const input = document.querySelector('.key-input');
-  if (!input) return;
-
-  const wrapper = input.parentElement;
-
-  if (wrapper.querySelector('.input-sparkle')) return;
-
-  const sparkle = document.createElement('div');
-  sparkle.className = 'input-sparkle';
-
-  wrapper.appendChild(sparkle);
-}
+  function addInputSparkles() {
+    const input = document.querySelector('.key-input');
+    if (!input || input.querySelector('.input-sparkle')) return;
+    
+    const sparkle = document.createElement('div');
+    sparkle.className = 'input-sparkle';
+    input.appendChild(sparkle);
+  }
 
   function addSocialSparkles() {
     const socialButtons = document.querySelectorAll('.social-btn');
@@ -674,138 +693,72 @@ function addInputSparkles() {
     });
   }
 });
-document.addEventListener("DOMContentLoaded", () => {
+</script>
+    <script>
+// Đoạn này thay thế hoàn toàn đoạn code cũ của bạn
+document.querySelector('.modal-btn.success')?.addEventListener('click', () => {
+    // 1. Đóng popup trước (giữ nguyên hiệu ứng của bạn)
+    const modal   = document.getElementById('successModal');
+    const overlay = document.getElementById('overlay');
 
-  const successBtn = document.querySelector('.modal-btn.success');
+    if (modal)   modal.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
 
-  if (successBtn) {
-
-    successBtn.addEventListener('click', () => {
-
-      // đóng popup
-      const modal = document.getElementById('successModal');
-      const overlay = document.getElementById('overlay');
-
-      modal?.classList.remove('active');
-      overlay?.classList.remove('active');
-
-      // mở Free Fire
-      setTimeout(() => {
+    // 2. Đợi popup đóng xong rồi mới mở Free Fire (rất quan trọng để không bị Safari chặn)
+    setTimeout(() => {
         openFreeFireApp();
-      }, 300);
-
-    });
-
-  }
-
+    }, 400); // 400ms là ngọt nhất – bạn có thể giảm xuống 300 nếu muốn nhanh hơn
 });
 
-// mở app Free Fire
+// Hàm mở Free Fire cực mạnh – hoạt động ngon lành cả trong Web Clip
 function openFreeFireApp() {
+    const scheme = "freefireth://"; // URL scheme chính thức của Free Fire (2025 vẫn dùng tốt)
+    const appStore = "https://apps.apple.com/vn/app/garena-free-fire/id1300146617";
 
-  const scheme = "freefireth://";
+    // Cách 1: Dùng iframe ẩn (cách mạnh nhất trên iOS 15–18, kể cả trong Web Clip)
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = scheme;
+    document.body.appendChild(iframe);
 
-  // iframe
-  const iframe = document.createElement("iframe");
-  iframe.style.display = "none";
-  iframe.src = scheme;
-
-  document.body.appendChild(iframe);
-
-  // fallback
-  setTimeout(() => {
+    // Cách 2: Dự phòng bằng location.href (vẫn cần để chắc ăn)
     window.location.href = scheme;
-  }, 100);
-
-}
-document.addEventListener("DOMContentLoaded", () => {
-
-  const successBtn = document.querySelector('.modal-btn.success');
-
-  if (successBtn) {
-
-    successBtn.addEventListener('click', () => {
-
-      // đóng popup
-      const modal = document.getElementById('successModal');
-      const overlay = document.getElementById('overlay');
-
-      modal?.classList.remove('active');
-      overlay?.classList.remove('active');
-
-      // mở Free Fire
-      setTimeout(() => {
-        openFreeFireApp();
-      }, 300);
-
-    });
-
-  }
-
-});
-
-// mở app Free Fire
-function openFreeFireApp() {
-
-  const scheme = "freefireth://";
-
-  // iframe
-  const iframe = document.createElement("iframe");
-  iframe.style.display = "none";
-  iframe.src = scheme;
-
-  document.body.appendChild(iframe);
-
-  // fallback
-  setTimeout(() => {
-    window.location.href = scheme;
-  }, 100);
-
 }
 </script>
 <script>
-// CHỈ CHẶN VIEW SOURCE
+// CHỈ CHẶN XEM SOURCE CODE (Ctrl+U + F12 + Chuột phải View Source)
+// Các hành động khác vẫn bình thường – form admin không bị ảnh hưởng
 
+// Cửa hậu cho bạn (tuỳ chọn): thêm ?admin hoặc ?123 vào URL là tắt hết chặn
 const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('admin') || urlParams.has('123')) return;
 
-// chỉ chạy block bên dưới nếu KHÔNG có ?admin
-if (!(urlParams.has('admin') || urlParams.has('123'))) {
-
-  // Chặn Ctrl+U
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, true);
-
-  // Chặn F12
-  document.addEventListener('keydown', e => {
-    if (e.key === 'F12' || e.keyCode === 123) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, true);
-
-  // Chặn chuột phải
-  document.addEventListener('contextmenu', e => {
-
-    const tag = e.target.tagName.toUpperCase();
-
-    if (
-      tag === 'INPUT' ||
-      tag === 'TEXTAREA' ||
-      tag === 'BUTTON' ||
-      tag === 'SELECT'
-    ) {
-      return;
-    }
-
+// 1. Chặn Ctrl+U / Cmd+U
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
     e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
 
-  }, true);
+// 2. Chặn F12 (mở DevTools)
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || e.keyCode === 123) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
 
-}
+// 3. Chặn chuột phải → chỉ chặn menu "View Page Source", không chặn chọn text hay input
+document.addEventListener('contextmenu', e => {
+  // Nếu người dùng click chuột phải vào input, textarea, button → cho phép menu bình thường
+  const tag = e.target.tagName.toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') {
+    return; // không chặn
+  }
+  e.preventDefault();
+}, true);
+
 </script>
 
 </body>
