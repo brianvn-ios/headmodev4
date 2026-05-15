@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       keyInput.value = "";
       showPage("mainScreen");
       const daysLeft = getDaysLeft(result.data.expiresAt);
-      showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
+      showToggleToast(`Đăng nhập thành công!`);
     } else {
       showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
     }
