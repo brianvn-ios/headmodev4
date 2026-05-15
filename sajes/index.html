@@ -170,63 +170,164 @@
 
     <div class="overlay" id="overlay"></div>
     <div class="toggle-toast" id="toggleToast"></div>
-    <script>
-// ==================== CẤU HÌNH SERVER ====================
-const SERVER_URL = "https://api-server-key.tranphat1357t.workers.dev";
+ <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCG0gzMq1UDYH-_iCjexsJuy1OY9qQLD1E",
+
+  authDomain: "serverkey-e7cc6.firebaseapp.com",
+
+  databaseURL: "https://serverkey-e7cc6-default-rtdb.firebaseio.com",
+
+  projectId: "serverkey-e7cc6",
+
+  storageBucket: "serverkey-e7cc6.firebasestorage.app",
+
+  messagingSenderId: "744043128336",
+
+  appId: "1:744043128336:web:2ec4b145220d3c7bbacc95"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 // ==================== BIẾN TOÀN CỤC ====================
+
 let isLoggedIn = false;
 let currentKey = "";
-let deviceId = localStorage.getItem("HEADLOCK_DEVICE_ID") || generateDeviceId();
+
+let deviceId =
+localStorage.getItem("HEADLOCK_DEVICE_ID")
+|| generateDeviceId();
 
 function generateDeviceId() {
-  const id = "HEADLOCK-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9);
-  localStorage.setItem("HEADLOCK_DEVICE_ID", id);
+
+  const id =
+  "HEADLOCK-" +
+  Date.now() +
+  "-" +
+  Math.random().toString(36).substr(2, 9);
+
+  localStorage.setItem(
+    "HEADLOCK_DEVICE_ID",
+    id
+  );
+
   return id;
 }
-// ==================== GỌI SERVER KIỂM TRA KEY ====================
-async function activateKey(key) {
-  try {
-    const res = await fetch(`${SERVER_URL}/api/activate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        key: key.trim(),
-        deviceId: deviceId
-      })
-    });
 
-    // kiểm tra response có hợp lệ không
-    if (!res.ok) {
+// ==================== KIỂM TRA KEY FIREBASE ====================
+
+async function activateKey(key) {
+
+  try {
+
+    const snapshot =
+    await get(ref(db, "keys/" + key));
+
+    if (!snapshot.exists()) {
+
       return {
         success: false,
         data: {
-          message: `Server lỗi (${res.status})`
+          message: "❌ Key không tồn tại!"
         }
       };
+
     }
 
-    const data = await res.json();
+    const data = snapshot.val();
+
+    if (data.active === false) {
+
+      return {
+        success: false,
+        data: {
+          message: "🚫 Key đã bị khóa!"
+        }
+      };
+
+    }
+
+    if (Date.now() > data.expire) {
+
+      return {
+        success: false,
+        data: {
+          message: "⏰ Key đã hết hạn!"
+        }
+      };
+
+    }
+
+    if (!data.devices) {
+      data.devices = {};
+    }
+
+    const devices =
+    Object.keys(data.devices);
+
+    if (
+      !data.devices[deviceId] &&
+      devices.length >= data.maxDevices
+    ) {
+
+      return {
+        success: false,
+        data: {
+          message: "📱 Key đã đủ thiết bị!"
+        }
+      };
+
+    }
+
+    if (!data.devices[deviceId]) {
+
+      data.devices[deviceId] = true;
+
+      await update(
+        ref(db, "keys/" + key),
+        {
+          devices: data.devices
+        }
+      );
+
+    }
 
     return {
-      success: data.ok === true || data.valid === true,
-      data: data
+      success: true,
+      data: {
+        expiresAt:
+        new Date(data.expire).toLocaleString(),
+        message: "✅ Key hợp lệ!"
+      }
     };
 
   } catch (err) {
+
     console.error(err);
 
     return {
       success: false,
       data: {
-        message: "Không kết nối được server!"
+        message: "❌ Lỗi Firebase!"
       }
     };
-  }
-}
 
+  }
+
+}
 // ==================== TOAST THÔNG BÁO ====================
 function showToggleToast(msg) {
   const toast = document.getElementById("toggleToast");
