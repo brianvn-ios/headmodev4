@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       isLoggedIn = true;
       currentKey = savedKey;
       showPage("mainScreen");
-      showToggleToast(`Chào mừng quay lại!! ${getDaysLeft(check.data.expiresAt)}`);
+      showToggleToast(`Chào mừng quay lại!!`);
     } else {
       localStorage.removeItem("HEADLOCK_KEY");
       showPage("splashScreen");
